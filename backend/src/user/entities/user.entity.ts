@@ -11,6 +11,11 @@ import * as bcrypt from 'bcrypt';
 import { Board } from 'src/board/entities/board.entity';
 import { Card } from 'src/card/entities/card.entity';
 
+export enum UserRole {
+  Admin = 'admin',
+  Member = 'member',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -27,6 +32,13 @@ export class User {
 
   @Column({ length: 200 })
   password: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.Member,
+  })
+  role: UserRole;
 
   @Column({ default: false })
   emailVerified: boolean;

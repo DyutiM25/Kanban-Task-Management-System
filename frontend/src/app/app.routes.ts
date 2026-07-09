@@ -23,6 +23,7 @@ export const routes: Routes = [
         (m) => m.ListComponent
       ),
     canActivate: [authGuard],
+    data: { roles: ['admin', 'member'] },
   },
   {
     path: 'boards/:id',
@@ -31,6 +32,7 @@ export const routes: Routes = [
         (m) => m.DetailComponent
       ),
     canActivate: [authGuard],
+    data: { roles: ['admin', 'member'] },
   },
   {
     path: '**',

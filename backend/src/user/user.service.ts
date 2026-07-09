@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User, UserRole } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { RegisterDto } from 'src/auth/dto/register.dto';
 
@@ -14,11 +14,25 @@ export class UserService {
 
   create(createUserDto: RegisterDto) {
     const user = new User();
-    user.email = createUserDto.email;
+    user.email = createUserDto.email.toLowerCase();
     user.firstName = createUserDto.firstName;
     user.lastName = createUserDto.lastName;
     user.password = createUserDto.password;
+    user.role = UserRole.Member;
     return this.userRepository.save(user);
+  }
+
+  findAll() {
+    return this.userRepository.find({
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        emailVerified: true,
+        role: true,
+      },
+    });
   }
 
   findOne(id: number) {

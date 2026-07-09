@@ -5,11 +5,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from 'src/user/entities/user.entity';
 
 export interface PayloadRequest extends Request {
   user: {
     email: string;
     id: number;
+    role: UserRole;
   };
 }
 
@@ -38,6 +40,7 @@ export class AuthGuard implements CanActivate {
     if (!authHeader) {
       return undefined;
     }
-    return authHeader.split(' ')[1];
+    const [type, token] = authHeader.split(' ');
+    return type === 'Bearer' ? token : undefined;
   }
 }

@@ -10,10 +10,20 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard, PayloadRequest } from 'src/auth/auth/auth.guard';
+import { Roles } from 'src/auth/auth/roles.decorator';
+import { RolesGuard } from 'src/auth/auth/roles.guard';
+import { UserRole } from './entities/user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('all')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(UserRole.Admin)
+  findAll() {
+    return this.userService.findAll();
+  }
 
   @Get()
   @UseGuards(AuthGuard)

@@ -12,6 +12,7 @@ import { Swimlane } from './swimlane/entities/swimlane.entity';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './auth/auth/auth.guard';
+import { RolesGuard } from './auth/auth/roles.guard';
 
 @Module({
   imports: [
@@ -32,6 +33,6 @@ import { AuthGuard } from './auth/auth/auth.guard';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AuthGuard],
+  providers: [AppService, AuthGuard, RolesGuard],
 })
 export class AppModule {}

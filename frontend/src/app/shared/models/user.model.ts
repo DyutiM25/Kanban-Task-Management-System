@@ -1,3 +1,5 @@
+export type UserRole = 'admin' | 'member';
+
 export interface ILogin {
   email: string;
   password: string;
@@ -17,4 +19,5 @@ export interface IUser {
   email: string;
   firstName: string;
   lastName: string;
+  role: UserRole;
 }
